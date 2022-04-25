@@ -50,9 +50,7 @@ class CalculatorController
      */
     public function multiplication(string $valueA, string $valueB): JsonResponse
     {
-        return new JsonResponse([
-            'result' => $valueA * $valueB,
-        ]);
+        return new JsonResponse($this->service->operationMultiply($valueA, $valueB));
     }
 
     /**
@@ -63,8 +61,6 @@ class CalculatorController
      */
     public function division(string $valueA, string $valueB): JsonResponse
     {
-        return new JsonResponse([
-            'result' => $valueA / $valueB,
-        ]);
+        return new JsonResponse($this->service->operationDivide($valueA, $valueB));
     }
 }

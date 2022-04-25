@@ -14,6 +14,7 @@ class CalculatorService
     public const STATUS_SUCCESS = 'success';
 
     private const ERROR_MESSAGE_INVALID_NUMBER = '(%s) is not a valid number';
+    private const ERROR_MESSAGE_BREAKING_THE_MATRIX = 'You do know that dividing by (%s) will break the Matrix, right?';
 
     /** @var array */
     private $response;
@@ -42,7 +43,7 @@ class CalculatorService
      *
      * @return bool
      */
-    private function isValid(string $valueA, string $valueB): bool
+    private function isValid(string $valueA, string $valueB, bool $isDivision = false): bool
     {
         if (!is_numeric($valueA)) {
             $this->setResponseFailed(sprintf(self::ERROR_MESSAGE_INVALID_NUMBER, $valueA));
@@ -51,6 +52,11 @@ class CalculatorService
 
         if (!is_numeric($valueB)) {
             $this->setResponseFailed(sprintf(self::ERROR_MESSAGE_INVALID_NUMBER, $valueB));
+            return false;
+        }
+
+        if ($isDivision && (float) $valueB == 0) {
+            $this->setResponseFailed(sprintf(self::ERROR_MESSAGE_BREAKING_THE_MATRIX, $valueB));
             return false;
         }
 
@@ -92,6 +98,44 @@ class CalculatorService
         }
 
         $this->setResponseResult($valueA - $valueB);
+        return $this->getResponse();
+    }
+
+    /**
+     * @param string $valueA
+     * @param string $valueB
+     *
+     * @return array
+     */
+    public function operationMultiply(string $valueA, string $valueB): array
+    {
+        $valueA = $this->parseCommas($valueA);
+        $valueB = $this->parseCommas($valueB);
+
+        if (!$this->isValid($valueA, $valueB)) {
+            return $this->getResponse();
+        }
+
+        $this->setResponseResult($valueA * $valueB);
+        return $this->getResponse();
+    }
+
+    /**
+     * @param string $valueA
+     * @param string $valueB
+     *
+     * @return array
+     */
+    public function operationDivide(string $valueA, string $valueB): array
+    {
+        $valueA = $this->parseCommas($valueA);
+        $valueB = $this->parseCommas($valueB);
+
+        if (!$this->isValid($valueA, $valueB, true)) {
+            return $this->getResponse();
+        }
+
+        $this->setResponseResult($valueA / $valueB);
         return $this->getResponse();
     }
 
