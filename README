@@ -1,0 +1,33 @@
+# Calculator
+
+Just a basic RESTful API with Symfony 5.4
+
+## Installation
+
+Use the github.com/rafaelucena/asr_calculator, download the project, then:
+
+```bash
+# gets the project installed
+$ composer install
+
+# gets the project running
+$ php -S 127.0.0.1:8000 -t public/
+```
+
+## Usage
+
+There are 4 routes enabled for the requests, methods configured are GET and POST only:
+
+127.0.0.1:8000/api/addition/{valueA}/{valueB}
+127.0.0.1:8000/api/subtraction/{valueA}/{valueB}
+127.0.0.1:8000/api/multiplication/{valueA}/{valueB}
+127.0.0.1:8000/api/division/{valueA}/{valueB}
+
+## Tests
+```bash
+# Run the unit tests configured
+$ bin/phpunit tests
+```
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
