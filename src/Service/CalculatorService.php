@@ -40,6 +40,7 @@ class CalculatorService
     /**
      * @param string $valueA
      * @param string $valueB
+     * @param bool $isDivision
      *
      * @return bool
      */
