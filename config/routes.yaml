@@ -1,3 +1,23 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+api_calculator_add:
+    path: /api/addition/{valueA}/{valueB}
+    controller: App\Controller\CalculatorController::addition
+    methods: GET|POST
+
+api_calculator_subtract:
+    path: /api/subtraction/{valueA}/{valueB}
+    controller: App\Controller\CalculatorController::subtraction
+    methods: GET|POST
+
+api_calculator_multiply:
+    path: /api/multiplication/{valueA}/{valueB}
+    controller: App\Controller\CalculatorController::multiplication
+    methods: GET|POST
+
+api_calculator_divide:
+    path: /api/division/{valueA}/{valueB}
+    controller: App\Controller\CalculatorController::division
+    methods: GET|POST
