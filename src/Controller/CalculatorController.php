@@ -39,9 +39,7 @@ class CalculatorController
      */
     public function subtraction(string $valueA, string $valueB): JsonResponse
     {
-        return new JsonResponse([
-            'result' => $valueA - $valueB,
-        ]);
+        return new JsonResponse($this->service->operationSubtract($valueA, $valueB));
     }
 
     /**

@@ -40,6 +40,27 @@ class CalculatorService
      * @param string $valueA
      * @param string $valueB
      *
+     * @return bool
+     */
+    private function isValid(string $valueA, string $valueB): bool
+    {
+        if (!is_numeric($valueA)) {
+            $this->setResponseFailed(sprintf(self::ERROR_MESSAGE_INVALID_NUMBER, $valueA));
+            return false;
+        }
+
+        if (!is_numeric($valueB)) {
+            $this->setResponseFailed(sprintf(self::ERROR_MESSAGE_INVALID_NUMBER, $valueB));
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $valueA
+     * @param string $valueB
+     *
      * @return array
      */
     public function operationAdd(string $valueA, string $valueB): array
@@ -47,17 +68,30 @@ class CalculatorService
         $valueA = $this->parseCommas($valueA);
         $valueB = $this->parseCommas($valueB);
 
-        if (!is_numeric($valueA)) {
-            $this->setResponseFailed(sprintf(self::ERROR_MESSAGE_INVALID_NUMBER, $valueA));
-            return $this->getResponse();
-        }
-
-        if (!is_numeric($valueB)) {
-            $this->setResponseFailed(sprintf(self::ERROR_MESSAGE_INVALID_NUMBER, $valueB));
+        if (!$this->isValid($valueA, $valueB)) {
             return $this->getResponse();
         }
 
         $this->setResponseResult($valueA + $valueB);
+        return $this->getResponse();
+    }
+
+    /**
+     * @param string $valueA
+     * @param string $valueB
+     *
+     * @return array
+     */
+    public function operationSubtract(string $valueA, string $valueB): array
+    {
+        $valueA = $this->parseCommas($valueA);
+        $valueB = $this->parseCommas($valueB);
+
+        if (!$this->isValid($valueA, $valueB)) {
+            return $this->getResponse();
+        }
+
+        $this->setResponseResult($valueA - $valueB);
         return $this->getResponse();
     }
 
